@@ -1,0 +1,78 @@
+<div class="main">
+  <div class="container">
+    <header>EXCHANGE RATE TABLE</header>
+    <div class="d-flex justify-content-center buttons-wrapper my-3">
+      <button type="button" (click)="cancelAdd()" *ngIf="isAdd">Delete</button>
+      <button type="button" (click)="addRate()" *ngIf="isAdd">Add</button>
+      <button type="button" class=add (click)="toggleAdd()" *ngIf="!isAdd">Add</button>
+    </div>
+    <div class="d-flex justify-content-center " *ngIf="isAdd">
+      <div class="form-group mx-3" >
+        <label for="from">Currency-From</label>
+        <input type="text" class="form-control" id="from" name="from" placeholder="INR" [(ngModel)]="from">
+      </div>
+      <div class="form-group mx-3">
+        <label for="to">Currency-To</label>
+        <input type="text" class="form-control" id="to" placeholder="USD" [(ngModel)]="to">
+      </div>
+      <div class="form-group mx-3">
+        <label for="exchange">Exchange Rate</label>
+        <input type="number" class="form-control" id="exchange" placeholder="70.989" [(ngModel)]="conversionMultiple">
+      </div>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Currency-From</th>
+          <th>Currency-To</th>
+          <th>Exchange Rates</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rate of rates">
+          <td>
+            {{ rate.id }}
+          </td>
+          <td *ngIf="rate.id == editRowId">
+            <input type="text" class="myInput" [(ngModel)]="rate.from" />
+          </td>
+          <td
+            *ngIf="rate.id !== editRowId"
+          >
+            {{ rate.from }}
+          </td>
+          <td *ngIf="rate.id == editRowId">
+            <input type="text" class="myInput" [(ngModel)]="rate.to" />
+          </td>
+          <td
+            *ngIf="rate.id !== editRowId"
+          >
+            {{ rate.to }}
+          </td>
+          <td *ngIf="rate.id == editRowId">
+            <input type="text" class="myInput" [(ngModel)]="rate.conversionMultiple" />
+          </td>
+          <td
+            *ngIf="rate.id !== editRowId"
+          >
+            {{ rate.conversionMultiple }}
+          </td>
+
+          <td>
+            <div *ngIf="rate.id !== editRowId">
+              <button class="edit" (click)="toggle(rate.id)">
+                Edit
+              </button>
+              <button class="delete" (click)="deleteRate(rate)">Delete</button>
+            </div>
+            <div *ngIf="rate.id == editRowId">
+              <button (click)="editRate(rate)">Save</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
